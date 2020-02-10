@@ -8,9 +8,10 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 def visualize_doc_embeddings(my_doc_embs,my_colors,my_labels,my_name):
-    my_pca = PCA(n_components=10)
+    my_pca = PCA(n_components=30)
     my_tsne = TSNE(n_components=2,perplexity=10) #https://lvdmaaten.github.io/tsne/
     doc_embs_pca = my_pca.fit_transform(my_doc_embs) 
     doc_embs_tsne = my_tsne.fit_transform(doc_embs_pca)
@@ -33,7 +34,9 @@ def visualize_doc_embeddings(my_doc_embs,my_colors,my_labels,my_name):
     
 import pickle
 file = open('fasttext_bourrin_embeddings.pkl','rb')
+# file = open('doc_keywords_embeddings.pkl','rb')
 embeddings = pickle.load(file)
+# embeddings = pd.read_csv('tfidf_emb_train.csv', header=None, dtype={0: str}).transpose()
 
 # Read training data
 with open("train.csv", 'r') as f:
@@ -43,14 +46,18 @@ train_hosts = list()
 y_train = list()
 embeddings_hosts = list()
 count_nan = 0
-for row in train_data:
+for i, row in enumerate(train_data):
     host, label = row.split(",")
     if np.isnan(embeddings[host]).any():
         count_nan +=1
         continue
+    """if embeddings[host] is None:
+        count_nan +=1
+        continue"""
     train_hosts.append(host)
     y_train.append(label.lower())
     embeddings_hosts.append(embeddings[host])
+    # embeddings_hosts.append(embeddings[i].values)
 
-colors = ['blue','red', 'green', 'yellow', 'brown', 'grey', 'black']
+colors = ['blue','red', 'green', 'yellow', 'brown', 'grey', 'black', 'magenta']
 visualize_doc_embeddings(embeddings_hosts,colors,y_train,"test")
