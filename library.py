@@ -1,4 +1,4 @@
-import re 
+import re
 import itertools
 import operator
 import copy
@@ -9,9 +9,12 @@ import nltk
 from nltk import pos_tag # nltk.download('maxent_treebank_pos_tagger') #nltk.download('stockwords')
 from nltk.stem import SnowballStemmer
 
-def clean_text_simple(text, my_stopwords, punct, remove_stopwords=True, pos_filtering=True, stemming=True):
+def clean_text_simple(text, my_stopwords, punct, remove_stopwords=True, pos_filtering=True,
+                      stemming=True, remove_digits=False):
     text = text.lower()
     text = ''.join(l for l in text if l not in punct) # remove punctuation (preserving intra-word dashes)
+    if remove_digits:
+        text = re.sub('\d', " ", text)
     text = re.sub(' +',' ',text) # strip extra white space
     text = text.strip() # strip leading and trailing white space
     if len(text) == 0:
@@ -41,7 +44,6 @@ def clean_text_simple(text, my_stopwords, punct, remove_stopwords=True, pos_filt
         for token in tokens:
             tokens_stemmed.append(stemmer.stem(token))
         tokens = tokens_stemmed
-    
     return(tokens)
 
 
