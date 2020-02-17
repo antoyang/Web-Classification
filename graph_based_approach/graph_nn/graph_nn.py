@@ -47,7 +47,7 @@ for row in train_data:
 
 # Loads the karate network
 G = nx.read_weighted_edgelist('../prototyping_data/reduced_edgelist.txt', delimiter=' ', nodetype=int,
-                              create_using=nx.Graph())
+                              create_using=nx.DiGraph())
 print(G.number_of_nodes())
 print(G.number_of_edges())
 
