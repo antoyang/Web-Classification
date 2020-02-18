@@ -7,7 +7,7 @@ def create_reduced_files(type="train"):
         exit(-1)
 
     og_file = type + ".csv"
-    reduced_file = "reduced_" + type + ".csv"
+    reduced_file = "reduced_" + type + "2.csv"
     reduced_edge_file = "reduced_" + type + "_edgelist.txt"
 
     with open(og_file, 'r') as f:
@@ -18,32 +18,38 @@ def create_reduced_files(type="train"):
     node_set = set()
 
     if os.path.exists(reduced_edge_file):
-        print("File" + reduced_edge_file + "already exist")
+        print("File", reduced_edge_file, "already exist")
         return
 
     with open(reduced_edge_file, 'w') as newlist:
         with open("edgelist.txt", 'r') as edgelist:
             for line in edgelist:
-                nodes = line.split(' ')
-                if nodes[0] in node_list and nodes[1] in node_list:
+                node0, node1, weight = line.split(' ')
+                #if node0 in node_list and node1 in node_list:
+                #    newlist.write(line)
+                #   node_set.add(node0)
+                #   node_set.add(node1)
+                if int(weight) < 4:
+                    if node0 in node_list and not node0 in node_set:
+                        pass
+                    elif node1 in node_list and not node1 in node_set:
+                        pass
+                    else:
+                        continue
+                if node0 in node_list or node1 in node_list:
                     newlist.write(line)
-                    node_set.add(nodes[0])
-                    node_set.add(nodes[1])
-                elif nodes[0] in node_list:
-                    newlist.write(line)
-                    node_set.add(nodes[0])
-                elif nodes[1] in node_list:
-                    newlist.write(line)
-                    node_set.add(nodes[1])
-
+                if node0 in node_list:
+                    node_set.add(node0)
+                if node1 in node_list:
+                    node_set.add(node1)
     print(len(node_set))
 
-    with open(reduced_file, 'w') as trainfile:
+    with open(reduced_file, 'w') as reduced:
         with open(og_file, 'r') as f:
             for line in f:
-                nodes = line.split(',')
+                nodes = line.replace("\n","").split(',')
                 if nodes[0] in node_set:
-                    trainfile.write(line)
+                    reduced.write(line)
                     node_set.remove(nodes[0])
 
 
