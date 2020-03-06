@@ -6,6 +6,11 @@ import scipy.sparse as sp
 import numpy as np
 from numpy.linalg import inv
 
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
+import seaborn as sn
+import pandas as pd
+
 
 
 def normalize_adjacency(A):
@@ -223,3 +228,12 @@ def pyramid_match_kernel(Us, d=20, L=4):
             K[j, i] = K[i, j]
 
     return K
+
+def draw_conf_mat(m, label_list, save=False, file_name=None):
+    df_cm = pd.DataFrame(m, label_list, label_list)
+    plt.figure(figsize=(30,30))
+    sn.set(font_scale=1.4) # for label size
+    sn.heatmap(df_cm, annot=True, annot_kws={"size": 16}, fmt="d") # font size
+    if save and not file_name is None:
+        plt.savefig(file_name)
+

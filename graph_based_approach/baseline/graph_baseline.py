@@ -3,7 +3,7 @@ import csv
 import networkx as nx
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import  classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score
 
 classes = ["business/finance", "education/research", "entertainment", "health/medical", "news/press",
            "politics/government/law", "sports", "tech/science"]
