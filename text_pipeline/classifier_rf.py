@@ -31,8 +31,8 @@ for l in set(y_train):
     print("proportion of {}: {:.2f}%".format(l, 100*np.mean([l == w for w in y_train])))
 
 # Read embeddings
-X = pd.read_csv("tfidf_emb_train.csv", header=None)
-Y = pd.read_csv("tfidf_emb_test.csv", header=None)
+X = pd.read_csv("Save/tfidf_emb_train.csv", header=None)
+Y = pd.read_csv("Save/tfidf_emb_test.csv", header=None)
 print("train dimension:", X.shape)
 print("test dimension:", Y.shape)
 

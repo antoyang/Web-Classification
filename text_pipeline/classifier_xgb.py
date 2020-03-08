@@ -26,8 +26,8 @@ with open("test.csv", 'r') as f:
     test_hosts = f.read().splitlines()
 
 # Read embeddings
-train_emb = pd.read_csv("tfidf_emb_train.csv", header=None)
-test_emb = pd.read_csv("tfidf_emb_test.csv", header=None)
+train_emb = pd.read_csv("Save/tfidf_emb_train.csv", header=None)
+test_emb = pd.read_csv("Save/tfidf_emb_test.csv", header=None)
 print("train dimension:", train_emb.shape)
 print("test dimension:", test_emb.shape)
 
