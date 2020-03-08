@@ -31,8 +31,8 @@ for l in set(y_train):
     print("proportion of {}: {:.2f}%".format(l, 100*np.mean([l == w for w in y_train])))
 
 # Read embeddings
-X = pd.read_csv("tfidf_emb_train.csv", header=None)
-Y = pd.read_csv("tfidf_emb_test.csv", header=None)
+X = pd.read_csv("kpca_emb_train.csv", header=None)
+Y = pd.read_csv("kpca_emb_test.csv", header=None)
 print("train dimension:", X.shape)
 print("test dimension:", Y.shape)
 
@@ -47,14 +47,14 @@ pprint(grid)
 
 clf = LogisticRegression()
 clf_grid = GridSearchCV(estimator=clf, param_grid=grid, scoring='neg_log_loss',
-                        cv = 5, verbose=2, n_jobs = 10)
+                        cv = 5, verbose=2, n_jobs = 12)
 clf_grid.fit(X, y_train)
 print('best CV score:', clf_grid.best_score_)
 pprint(clf_grid.best_params_)
 
-# Preds
+# Make predictions
 y_pred = clf_grid.best_estimator_.predict_proba(Y)
-with open('lr_tfidf_baseline.csv', 'w') as csvfile:
+with open('lr_graph_kpca.csv', 'w') as csvfile:
     writer = csv.writer(csvfile, delimiter=',')
     lst = clf_grid.classes_.tolist()
     lst.insert(0, "Host")

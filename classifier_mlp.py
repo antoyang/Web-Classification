@@ -10,10 +10,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import GridSearchCV
 import numpy as np
 import pandas as pd
-import os
 from pprint import pprint
-
-os.chdir('C:/Users/flo-r/Desktop/Cours MVA/S1/ALTEGRAD/competition/Web-Classification')
 
 # Read training data
 with open("train.csv", 'r') as f:
@@ -54,7 +51,7 @@ mlp_grid.fit(X, y_train)
 print('best CV score:', mlp_grid.best_score_)
 pprint(mlp_grid.best_params_)
 
-# preds
+# Make predictions
 y_pred = mlp_grid.best_estimator_.predict_proba(Y)
 with open('mlp_tfidf_baseline.csv', 'w') as csvfile:
     writer = csv.writer(csvfile, delimiter=',')

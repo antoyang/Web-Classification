@@ -9,11 +9,8 @@ import csv
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RandomizedSearchCV
 import numpy as np
-import os
 import pandas as pd
 from pprint import pprint
-
-os.chdir('C:/Users/flo-r/Desktop/Cours MVA/S1/ALTEGRAD/competition/Web-Classification')
 
 # Read training data
 with open("train.csv", 'r') as f:
@@ -61,7 +58,7 @@ print('best CV score:', rf_random.best_score_)
 
 pprint(rf_random.best_params_)
 
-# Preds
+# Make predictions
 y_pred = rf_random.best_estimator_.predictpredict_proba(Y)
 with open('rf_tfidf_baseline.csv', 'w') as csvfile:
     writer = csv.writer(csvfile, delimiter=',')
