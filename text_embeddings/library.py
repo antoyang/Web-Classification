@@ -1,10 +1,6 @@
 import re 
 import itertools
-import operator
-import copy
 import igraph
-import heapq
-import nltk
 # requires nltk 3.2.1
 from nltk import pos_tag # nltk.download('maxent_treebank_pos_tagger') #nltk.download('stockwords')
 from nltk.stem import SnowballStemmer
@@ -107,70 +103,3 @@ def terms_to_graph(terms, window_size):
     g.vs['weight'] = g.strength(weights=list(from_to.values())) # weighted degree
 
     return (g)
-
-
-def core_dec(g,weighted):
-    '''(un)weighted k-core decomposition'''
-    # work on clone of g to preserve g 
-    gg = copy.deepcopy(g)
-    if not weighted:
-        gg.vs['weight'] = gg.strength() # overwrite the 'weight' vertex attribute with the unweighted degrees
-    # initialize dictionary that will contain the core numbers
-    cores_g = dict(zip(gg.vs['name'],[0]*len(gg.vs)))
-    
-    while len(gg.vs) > 0:
-        # find index of lowest degree vertex
-        min_degree = min(gg.vs['weight'])
-        index_top = gg.vs['weight'].index(min_degree)
-        name_top = gg.vs[index_top]['name']
-        # get names of its neighbors
-        neighbors = gg.vs[gg.neighbors(index_top)]['name']
-        # exclude self-edges
-        neighbors = [elt for elt in neighbors if elt!=name_top]
-        # set core number of lowest degree vertex as its degree
-        cores_g[name_top] = min_degree
-        ### fill the gap (delete top vertex and its incident edges) ###
-        #print(gg.strength(),gg.vs['weight'])
-        gg.delete_vertices(index_top)
-        #print(gg.strength(),gg.vs['weight'])
-        
-        if neighbors:
-            if weighted: 
-                ### fill the gap (compute the new weighted degrees, save results as 'new_degrees')
-                new_degrees=gg.strength(gg.vs, weights=gg.es['weight'])
-            else:
-                ### fill the gap (same as above but for the basic degree) ###
-                new_degrees=gg.strength(gg.vs)
-                """for neigh in neighbors:
-                    index_n = gg.vs['name'].index(neigh)
-                    new_degrees[index_n]= new_degrees[index_n] -1"""
-            # iterate over neighbors of top element
-            for neigh in neighbors:
-                index_n = gg.vs['name'].index(neigh)
-                #import ipdb;ipdb.set_trace()
-                gg.vs[index_n]['weight'] = max(min_degree,new_degrees[index_n])  
-        
-        
-    return(cores_g)
-
-
-def accuracy_metrics(candidate, truth):
-    # true positives ('hits') are both in candidate and in truth
-    tp = len(set(candidate).intersection(truth))
-    
-    # false positives a.k.a. false alarms are in candidate but not in truth
-    fp = len([element for element in candidate if element not in truth])
-    
-    ### fill the gap (compute false negatives a.k.a. misses, save results as 'fn')
-    fn = len([element for element in truth if element not in candidate])
-    
-    ### fill the gaps (compute precision and recall as a function of 'tp', 'fp' and 'fn', save results as 'prec' and 'rec') ###
-    prec=tp/(tp+fp)
-    rec=tp/(tp+fn)
-    
-    if prec+rec != 0:
-        f1 = 2*prec*rec/(prec+rec)
-    else:
-        f1 = 0
-    
-    return (prec, rec, f1)

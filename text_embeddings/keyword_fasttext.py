@@ -12,7 +12,7 @@ import numpy as np
 import pickle
 
 # Read keywords
-keywords_list = open("keywords.pkl", "rb")
+keywords_list = open("test_keywords.pkl", "rb")
 keywords_list = pickle.load(keywords_list)
 
 # Read training data
@@ -39,8 +39,8 @@ punct = string.punctuation.replace('-', '')
 ft = fasttext.load_model('cc.fr.300.bin')
 
 # Get Embeddings
-filenames = train_hosts
-doc_embeddings = dict.fromkeys(train_hosts)
+filenames = test_hosts
+doc_embeddings = dict.fromkeys(test_hosts)
 for i,file in enumerate(filenames):
     keywords = keywords_list[i]
     if len(keywords)<1:
@@ -54,7 +54,5 @@ for i,file in enumerate(filenames):
         print(i)
 
 # Save Embeddings
-with open('doc_keywords_embeddings.pkl', 'wb') as f:
+with open('test_keywords_embeddings.pkl', 'wb') as f:
     pickle.dump(doc_embeddings, f)
-
-# To do also for test once it works well ...
