@@ -11,4 +11,4 @@ The classifier used is Linear Regression (with Grid Search and k-fold cross vali
 The predictions were merged via test time augmentation, code available at code/text_pipeline/Test Time Augmentation/result_file_merge.ipynb.
 
 # Other functionalities
-We tried different approaches that are explained in Report.pdf.
+We tried different approaches that are explained in Report.pdf, and of which the code can be found in the code folder.
