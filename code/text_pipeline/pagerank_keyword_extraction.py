@@ -5,12 +5,11 @@ Created on Sun Feb  2 00:29:51 2020
 @author: Antoine
 """
 
-import os
 import string
 import operator
 import nltk
 from nltk.corpus import stopwords
-from library import clean_text_simple,terms_to_graph
+from code.library import clean_text_simple,terms_to_graph
 import pickle
 
 # Read training data

@@ -13,7 +13,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
 from numpy import savetxt
-from library import clean_text_simple
+from code.library import clean_text_simple
 
 # Read training data
 with open("train.csv", 'r') as f:

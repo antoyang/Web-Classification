@@ -4,14 +4,13 @@ Created on Mon Feb 10 13:08:46 2020
 
 @author: Antoine
 """
-import fasttext
 import fasttext.util
 import string
 import nltk
 from nltk.corpus import stopwords
 import numpy as np
 import pickle
-from library import clean_text_simple
+from code.library import clean_text_simple
 
 # Read training data
 with open("train.csv", 'r') as f:
