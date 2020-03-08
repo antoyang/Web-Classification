@@ -58,7 +58,7 @@ def get_embedding_reduced_train():
 
     fig, ax = plt.subplots()
     ax.scatter(my_tsne_fit[:, 0], my_tsne_fit[:, 1], s=5, c=colors)
-
+    ax.legend()
     fig.suptitle('t-SNE visualization of node embeddings', fontsize=20)
     fig.set_size_inches(11, 7)
     fig.savefig('graphwave_node_embeddings.pdf', dpi=300)

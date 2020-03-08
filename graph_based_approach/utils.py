@@ -2,46 +2,24 @@
 Deep Learning on Graphs - ALTEGRAD - Dec 2019
 """
 import csv
-import scipy.sparse as sp
-import numpy as np
-from numpy.linalg import inv
 
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
-import seaborn as sn
+import numpy as np
 import pandas as pd
-
+import scipy.sparse as sp
+import seaborn as sn
+from numpy.linalg import inv
 
 
 def normalize_adjacency(A):
-    ############## Task 9
     n = A.shape[0]
     A = A + np.eye(A.shape[0])
     b = np.sum(A, axis=0)
-    b = [b[0,i] for i in range(n)]
+    b = [b[0, i] for i in range(n)]
     D_bar = inv(np.sqrt(np.diag(b)))
     A_normalized = D_bar.dot(A).dot(D_bar)
-    ##################
-    # your code here #
-    ##################
 
     return A_normalized
-
-# def normalize_adjacency(A):
-#     ############## Task 9
-#     n = A.shape[0]
-#     A_bar = A + np.eye(A.shape[0])
-#     b = np.sum(A_bar, axis=0)
-#     b = [b[0,i] for i in range(n)]
-#     D = np.diag(b)
-#     D_bar = inv(np.sqrt(D))
-#
-#     A_normalized = D_bar.dot(A_bar).dot(D_bar)
-#     ##################
-#     # your code here #
-#     ##################
-#
-#     return A_normalized
 
 
 def encode_onehot(labels):
@@ -229,11 +207,12 @@ def pyramid_match_kernel(Us, d=20, L=4):
 
     return K
 
+
 def draw_conf_mat(m, label_list, save=False, file_name=None):
     df_cm = pd.DataFrame(m, label_list, label_list)
-    plt.figure(figsize=(30,30))
-    sn.set(font_scale=1.4) # for label size
-    sn.heatmap(df_cm, annot=True, annot_kws={"size": 16}, fmt="d") # font size
+    fig, ax = plt.subplots()
+    ax.set_ylim(len(m) - 5, -0.5)
+    sn.set(font_scale=2)  # for label size
+    sn.heatmap(df_cm, annot=True, annot_kws={"size": 16}, fmt="d")  # font size
     if save and not file_name is None:
         plt.savefig(file_name)
-

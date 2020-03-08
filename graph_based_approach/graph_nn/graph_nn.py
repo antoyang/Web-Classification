@@ -123,7 +123,7 @@ with open('results.pkl', 'wb') as resultfile:
 
 classes_per_cluster = dict()
 output = torch.argmax(output, 1)
-output = output.numpy()
+output = output.detach().cpu().numpy()
 for cluster, true_class in zip(output, y_train):
     to_add = np.array([0 for _ in range(len(classes))])
     to_add[true_class] += 1

@@ -9,13 +9,13 @@ from graph_based_approach.utils import read_edgelist, extract_egonets, write_to_
 
 # Training settings
 parser = argparse.ArgumentParser()
-parser.add_argument('--path-to-edgelist', default='../prototyping_data/reduced_edgelist.txt',
+parser.add_argument('--path-to-edgelist', default='../../data/edgelist.txt',
                     help='Path to the edgelist.')
 parser.add_argument('--delimiter', default=' ',
                     help='The string used to separate values.')
-parser.add_argument('--path-to-output-file', default='reduced_embedding2.txt',
+parser.add_argument('--path-to-output-file', default='embedding2.txt',
                     help='Path to output file')
-parser.add_argument('--radius', type=int, default=2,
+parser.add_argument('--radius', type=int, default=1,
                     help='Maximum radius of ego-networks.')
 parser.add_argument('--dim', type=int, default=10,
                     help='Dimensionality of the embeddings.')
