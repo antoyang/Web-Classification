@@ -15,7 +15,7 @@ colors = ['blue','red', 'green', 'yellow', 'brown', 'grey', 'black', 'magenta']
 
 def visualize_doc_embeddings(my_doc_embs,my_colors,my_labels,my_name):
     my_pca = PCA(n_components=10)
-    my_tsne = TSNE(n_components=2,perplexity=10) #https://lvdmaaten.github.io/tsne/
+    my_tsne = TSNE(n_components=2,perplexity=10) 
     doc_embs_pca = my_pca.fit_transform(my_doc_embs) 
     doc_embs_tsne = my_tsne.fit_transform(doc_embs_pca)
     
@@ -53,9 +53,6 @@ for i, row in enumerate(train_data):
     if np.isnan(embeddings[host]).any():
         count_nan +=1
         continue
-    """if embeddings[host] is None:
-        count_nan +=1
-        continue"""
     train_hosts.append(host)
     y_train.append(label.lower())
     embeddings_hosts.append(embeddings[host])
