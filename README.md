@@ -6,7 +6,7 @@ The text embeddings of our best submission are extracted using CamemBERT and TF-
 
 They were generated using the codes code/text_pipeline/tfidf_embeddings.py and code/text_pipeline/CamemBERT.ipynb.
 
-The classifier used is Linear Regression (with Grid Search and k-fold cross validation) and can be found at code/text_pipeline/classifier_lr.py.
+The classifier used is Logistic Regression (with Grid Search and k-fold cross validation) and can be found at code/text_pipeline/classifier_lr.py.
 
 The predictions were merged via test time augmentation, code available at code/text_pipeline/Test Time Augmentation/result_file_merge.ipynb.
 
